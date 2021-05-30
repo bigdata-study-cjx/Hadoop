@@ -1,4 +1,4 @@
-package hdfs;
+package cn.cjx.hadoop.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -6,7 +6,6 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
 
 import java.io.File;
 import java.io.FileInputStream;
