@@ -24,7 +24,7 @@
     </property>
     <property>
         <name>hadoop.http.staticuser.user</name>
-        <value>kfk</value>
+        <value>root</value>
         <description>HDFS Web UI 用户名</description>
     </property>
     <property>
