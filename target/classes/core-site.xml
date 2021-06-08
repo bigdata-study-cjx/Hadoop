@@ -27,9 +27,9 @@
         <value>root</value>
         <description>HDFS Web UI 用户名</description>
     </property>
-    <!--<property>
+    <property>
         <name>hadoop.tmp.dir</name>
         <value>/opt/modules/hadoop-2.6.0/tmp</value>
         <description>其他临时目录的基础。（HDFS等相关文件的存储目录基础，很重要）</description>
-    </property>-->
+    </property>
 </configuration>
