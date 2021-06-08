@@ -80,10 +80,12 @@ public class WordCountMR {
 
     // 注释
     public static void main(String[] args) {
-        args = new String[]{
-                "hdfs://172.168.0.2:9000/user/root/data/wordcount.txt",
-                "hdfs://172.168.0.2:9000/user/root/mr/result/output"
-        };
+        if (args.length<2){
+            args = new String[]{
+                    "hdfs://172.168.0.2:9000/user/root/data/wordcount.txt",
+                    "hdfs://172.168.0.2:9000/user/root/mr/result/output"
+            };
+        }
 
         WordCountMR wordCountMR = new WordCountMR();
         try {
