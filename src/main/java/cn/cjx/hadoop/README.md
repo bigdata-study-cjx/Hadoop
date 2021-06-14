@@ -1,6 +1,6 @@
 # 运行单机hadoop2.6.0容器
 ```
-docker run -it -p 8088:8088 -p 50070:50070 -p 50075:50075 --net bigdata --ip 172.168.0.2 --name hadoop2.6.0 --hostname bigdata-pro00 dockerhubbigdata/hadoop:2.6.0-alone /bin/bash
+docker run -it -p 8088:8088 -p 50070:50070 -p 50075:50075 --net bigdata --ip 172.168.0.2 --name hadoop2.6.0 --hostname bigdata dockerhubbigdata/hadoop:2.6.0-alone /bin/bash
 
 service ssh start
 
@@ -19,6 +19,6 @@ export PATH=$JAVA_HOME/bin:$PATH
 ```
 # WebUI
 ```
-http://bigdata-pro00:50070/explorer.html#/user/root/data
-http://bigdata-pro00:8088/cluster
+http://bigdata:50070/explorer.html#/user/root/data
+http://bigdata:8088/cluster
 ```
