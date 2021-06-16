@@ -30,3 +30,28 @@ hadoop	3
 hbase	2
 ...
 ```
+# 验证设置reduce数量
+```
+job.setNumReduceTasks(2);
+
+http://bigdata:50070/explorer.html#/user/root/mr/result/output 目录下有两个part*
+root@bigdata:/opt/modules/hadoop-2.6.0# bin/hdfs dfs -text /user/root/mr/result/output/part-r-00000
+c	1
+flume	1
+hadoop	3
+hbase	2
+hdfs	2
+kotlin	2
+spark	1
+storm	1
+root@bigdata:/opt/modules/hadoop-2.6.0# bin/hdfs dfs -text /user/root/mr/result/output/part-r-00001
+flink	1
+hive	2
+java	2
+kafka	1
+mysql	1
+python	1
+scala	2
+sqoop	1
+yarn	2
+```

@@ -107,13 +107,15 @@ public class WordCountMRUpCompress extends Configured implements Tool {
         //compress
         // http://bigdata:19888/ -> Job -> Configuration -> 所有MapReduce的参数
         // 开启压缩
-        configuration.set("mapreduce.map.output.compress","true");
+//        configuration.set("mapreduce.map.output.compress","true");
         // 设置压缩算法
-        configuration.set("mapreduce.map.output.compress.codec","org.apache.hadoop.io.compress.SnappyCodec");
+//        configuration.set("mapreduce.map.output.compress.codec","org.apache.hadoop.io.compress.SnappyCodec");
 
         //5.分组
         //job.setGroupingComparatorClass();
 
+        // 设置reduce数量
+        job.setNumReduceTasks(2);
         //3.3) reduce
         job.setReducerClass(WordCountReduce.class);
         job.setMapOutputKeyClass(Text.class);
