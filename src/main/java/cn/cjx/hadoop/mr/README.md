@@ -55,3 +55,25 @@ scala	2
 sqoop	1
 yarn	2
 ```
+# 调优参数(具体数值根据测试得到)
+```
+map任务输出时进行压缩
+mapreduce.map.output.compress
+
+环形缓冲区大小
+mapreduce.task.io.sort.mb
+
+达到环形缓冲区大小的什么比例开始写入到磁盘
+mapreduce.map.sort.spill.percent
+
+小文件数达到多少开始一次合并
+mapreduce.task.io.sort.factor
+
+map，reduce任务执行时，能使用的虚拟计算核心数量
+mapreduce.map.cpu.vcores
+mapreduce.reduce.cpu.vcores
+
+map，reduce任务执行时，能使用的内存资源
+mapreduce.map.memory.mb
+mapreduce.reduce.memory.mb
+```
