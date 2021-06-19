@@ -77,3 +77,23 @@ map，reduce任务执行时，能使用的内存资源
 mapreduce.map.memory.mb
 mapreduce.reduce.memory.mb
 ```
+
+# 数据
+```
+➜  datas pwd
+/opt/datas
+➜  datas ll
+总用量 41M
+-rw-rw-r-- 1 cjx cjx  38M 6月  17 22:59 2015082818
+-rw-r--r-- 1 cjx cjx 448K 6月  17 22:59 movies.txt
+-rw-r--r-- 1 cjx cjx 2.4M 6月  17 22:59 ratings.txt
+➜  datas head -n 1 2015082818 
+121508281810000000	http://www.yhd.com/?union_ref=7&cp=0			3	PR4E9HWE38DMN4Z6HUG667SCJNZXMHSPJRER					VFA5QRQ1N4UJNS9P6MH6HPA76SXZ737P	10977119545124.65.159.122		unionKey:10977119545		2015-08-28 18:10:00	50116447	http://image.yihaodianimg.com/virtual-web_static/virtual_yhd_iframe_index_widthscreen.html?randid=2015828	6	1000					Mozilla/5.0 (Windows NT 6.1; rv:40.0) Gecko/20100101 Firefox/40.0	Win32					lunbo_tab_3		北京市	2			北京市						1		1	1		1											1440*900				1440756285639
+```
+## 上传到HDFS
+```
+➜  datas docker cp ./2015082818 482324c29c5d:/opt/datas/
+root@bigdata:/opt/modules/hadoop-2.6.0# bin/hdfs dfs -mkdir -p /user/root/datas/webpv
+root@bigdata:/opt/modules/hadoop-2.6.0# bin/hdfs dfs -put /opt/datas/2015082818 /user/root/datas/webpv/
+查看：http://bigdata:50070/explorer.html#/user/root/datas/webpv
+```
