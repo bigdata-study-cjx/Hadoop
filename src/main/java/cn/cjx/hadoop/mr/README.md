@@ -78,7 +78,8 @@ mapreduce.map.memory.mb
 mapreduce.reduce.memory.mb
 ```
 
-# 数据
+# MR案例
+## 数据
 ```
 ➜  datas pwd
 /opt/datas
@@ -97,3 +98,34 @@ root@bigdata:/opt/modules/hadoop-2.6.0# bin/hdfs dfs -mkdir -p /user/root/datas/
 root@bigdata:/opt/modules/hadoop-2.6.0# bin/hdfs dfs -put /opt/datas/2015082818 /user/root/datas/webpv/
 查看：http://bigdata:50070/explorer.html#/user/root/datas/webpv
 ```
+## 打包，用Yarn运行
+```
+➜  Hadoop_jar git:(main) ✗ pwd
+/git-projects/bigdata-study-cjx/Hadoop/out/artifacts/Hadoop_jar
+➜  Hadoop_jar git:(main) ✗ docker cp Hadoop.jar 482324c29c5d:/opt/jars/
+bin/yarn jar /opt/jars/Hadoop.jar /user/root/datas/webpv /user/root/mr/result/output
+hadoop-2.6.0# bin/hdfs dfs -text /user/root/mr/result/output/part*
+```
+
+# 问题
+## 问题一
+Docker内 yarn执行任务，卡在running job
+### 原因
+Docker内分配的内存、CPU资源不足
+### 解决方案
+在yarn-site.xml中加:
+```
+<property>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>20480</value>
+</property>
+<property>
+   <name>yarn.scheduler.minimum-allocation-mb</name>
+   <value>2048</value>
+</property>
+<property>
+    <name>yarn.nodemanager.vmem-pmem-ratio</name>
+    <value>2.1</value>
+</property>
+```
+重启YARN：/opt/modules/hadoop-2.6.0/sbin/stop-yarn.sh  /opt/modules/hadoop-2.6.0/sbin/start-yarn.sh

@@ -1,6 +1,6 @@
 package cn.cjx.hadoop.mr;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
@@ -17,15 +17,18 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 import java.io.IOException;
-import java.util.List;
 
-public class MRTemplate extends Configured implements Tool {
+public class WebPV extends Configured implements Tool {
 
     /**
      * map
      * TODO
      */
-    private static class TemplateMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+    private static class WebPVMapper extends Mapper<LongWritable, Text, IntWritable, IntWritable> {
+
+        private final static IntWritable mapOutValue = new IntWritable(1);
+        private IntWritable mapOutKey = new IntWritable();
+
         @Override
         protected void setup(Context context) throws IOException, InterruptedException {
             //TODO
@@ -33,7 +36,35 @@ public class MRTemplate extends Configured implements Tool {
 
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            //TODO
+            String[] values = value.toString().split("\t");
+
+            if (30 > values.length) {
+                context.getCounter("WEBPV_COUNTERS", "LENGTH_LT30_COUNTER").increment(1);
+                return;
+            }
+            String provinceIdValue = values[23];
+            String url = values[1];
+
+            if (StringUtils.isBlank(provinceIdValue)) {
+                context.getCounter("WEBPV_COUNTERS", "PROVINCEID_ISBLACK_COUNTER").increment(1);
+                return;
+            }
+            if (StringUtils.isBlank(url)) {
+                context.getCounter("WEBPV_COUNTERS", "URL_ISBLACK_COUNTER").increment(1);
+                return;
+            }
+
+            int provinceId = 0;
+            try {
+                provinceId = Integer.valueOf(provinceIdValue);
+            } catch (Exception e) {
+                context.getCounter("WEBPV_COUNTERS", "PROVINCEID_VALIDATE_COUNTER").increment(1);
+                return;
+            }
+
+            mapOutKey.set(provinceId);
+            context.write(mapOutKey, mapOutValue);
+
         }
 
         @Override
@@ -45,21 +76,27 @@ public class MRTemplate extends Configured implements Tool {
     /**
      * reduce
      */
-    private static class TemplateReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+    private static class WebPVReduce extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
+        private IntWritable outputValue = new IntWritable();
 
         @Override
         protected void setup(Context context) throws IOException, InterruptedException {
-            //TODO
+            super.setup(context);
         }
 
         @Override
-        protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            //TODO
+        protected void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable value:values){
+                sum += value.get();
+            }
+            outputValue.set(sum);
+            context.write(key, outputValue);
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-            //TODO
+            super.cleanup(context);
         }
     }
 
@@ -74,16 +111,18 @@ public class MRTemplate extends Configured implements Tool {
         //driver
         //1) get conf
         Configuration configuration = this.getConf();
+
         //2) create job
         Job job = Job.getInstance(configuration, this.getClass().getSimpleName());
         job.setJarByClass(this.getClass());
+
         //3.1) input
         Path path = new Path(args[0]);
         FileInputFormat.addInputPath(job, path);
+
         //3.2) map
-        job.setMapperClass(TemplateMapper.class);
-        // TODO
-        job.setMapOutputKeyClass(Text.class);
+        job.setMapperClass(WebPVMapper.class);
+        job.setMapOutputKeyClass(IntWritable.class);
         job.setMapOutputValueClass(IntWritable.class);
 
         //1.分区
@@ -93,7 +132,7 @@ public class MRTemplate extends Configured implements Tool {
         //job.setSortComparatorClass();
 
         //3.combiner
-        // job.setCombinerClass(WordCountCombiner.class);
+        job.setCombinerClass(WebPVReduce.class);
 
         //compress
         // http://bigdata:19888/ -> Job -> Configuration -> 所有MapReduce的参数
@@ -106,13 +145,12 @@ public class MRTemplate extends Configured implements Tool {
         //job.setGroupingComparatorClass();
 
         //3.3) reduce
-        job.setReducerClass(TemplateReduce.class);
-        // TODO
-        job.setOutputKeyClass(Text.class);
+        job.setReducerClass(WebPVReduce.class);
+        job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(IntWritable.class);
 
         // 设置reduce数量
-        job.setNumReduceTasks(2);
+//        job.setNumReduceTasks(2);
         //3.4) output
         Path output = new Path(args[1]);
         FileOutputFormat.setOutputPath(job, output);
@@ -124,7 +162,7 @@ public class MRTemplate extends Configured implements Tool {
     public static void main(String[] args) {
         if (args.length < 2) {
             args = new String[]{
-                    "hdfs://172.168.0.2:9000/user/root/data/wordcount.txt",
+                    "hdfs://172.168.0.2:9000/user/root/datas/webpv/",
                     "hdfs://172.168.0.2:9000/user/root/mr/result/output"
             };
         }
@@ -137,7 +175,7 @@ public class MRTemplate extends Configured implements Tool {
             if (fileSystem.exists(fileOutPath)) {
                 fileSystem.delete(fileOutPath, true);
             }
-            ToolRunner.run(configuration, new MRTemplate(), args);
+            ToolRunner.run(configuration, new WebPV(), args);
         } catch (Exception e) {
             e.printStackTrace();
         }
