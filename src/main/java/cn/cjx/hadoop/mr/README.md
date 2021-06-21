@@ -107,6 +107,8 @@ bin/yarn jar /opt/jars/Hadoop.jar /user/root/datas/webpv /user/root/mr/result/ou
 hadoop-2.6.0# bin/hdfs dfs -text /user/root/mr/result/output/part*
 ```
 
+# 笔记
+Combiner也是一个Reduce，不过是Map端的。但是，如果关闭了Reduce，或因为设置Reduce数量（job.setNumReduceTasks(0)），导致Reduce无法执行，则Combiner也不会执行。
 # 问题
 ## 问题一
 Docker内 yarn执行任务，卡在running job
