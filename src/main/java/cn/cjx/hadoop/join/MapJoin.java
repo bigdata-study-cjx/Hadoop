@@ -39,7 +39,7 @@ public class MapJoin extends Configured implements Tool {
         private Text outputValue = new Text();
 
         @Override
-        protected void setup(Context context) throws IOException, InterruptedException {
+        protected void setup(Context context) throws IOException {
             Configuration configuration = context.getConfiguration();
             URI[] cacheFiles = Job.getInstance(configuration).getCacheFiles();
             Path path = new Path(cacheFiles[0]);
@@ -74,11 +74,6 @@ public class MapJoin extends Configured implements Tool {
                     break;
                 }
             }
-        }
-
-        @Override
-        protected void cleanup(Context context) throws IOException, InterruptedException {
-            //TODO
         }
     }
 

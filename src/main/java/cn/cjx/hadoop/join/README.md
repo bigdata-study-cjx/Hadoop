@@ -34,6 +34,5 @@ root@bigdata:/opt/modules/hadoop-2.6.0# bin/hdfs dfs -text /user/root/mr/result/
 2	2,ben,15511112222102,2,19.9,product-5
 3	3,henry,13533334444104,3,44,product-7
 4	4,tony,13988886666105,4,1009,product-8
-
 ```
 # Reduce端join
