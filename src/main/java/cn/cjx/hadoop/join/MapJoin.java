@@ -128,7 +128,8 @@ public class MapJoin extends Configured implements Tool {
             if (fileSystem.exists(fileOutPath)) {
                 fileSystem.delete(fileOutPath, true);
             }
-            ToolRunner.run(configuration, new MapJoin(), args);
+            int status = ToolRunner.run(configuration, new MapJoin(), args);
+            System.exit(status);
         } catch (Exception e) {
             e.printStackTrace();
         }
