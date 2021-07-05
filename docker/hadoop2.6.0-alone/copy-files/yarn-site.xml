@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<configuration>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+        <description>服务名称</description>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>172.168.0.2</value>
+        <description>The hostname of the RM.</description>
+    </property>
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value>
+        <description>开启日志聚集</description>
+    </property>
+    <property>
+        <name>yarn.log-aggregation.retain-seconds</name>
+        <value>259200</value>
+        <description>收集的日志的保留时间，以秒为单位，到时后被删除，保留3天后删除</description>
+    </property>
+    <property>
+        <name>yarn.nodemanager.local-dirs</name>
+        <value>/opt/modules/hadoop-2.6.0/tmp</value>
+        <description>Diagnostics: File /opt/modules/hadoop-2.6.0/data/tmp/nm-local-dir/usercache/kfk/appcache/application_159/container_159 does not exist Failing this attempt. Failing the application.</description>
+    </property>
+</configuration>

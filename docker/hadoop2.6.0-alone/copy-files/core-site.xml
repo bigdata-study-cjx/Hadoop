@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://172.168.0.2:9000</value>
+        <description>配置NameNode的主机地址及其端口号</description>
+    </property>
+    <property>
+        <name>hadoop.http.staticuser.user</name>
+        <value>kfk</value>
+        <description>HDFS Web UI 用户名</description>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/opt/modules/hadoop-2.6.0/tmp</value>
+        <description>其他临时目录的基础。（HDFS等相关文件的存储目录基础，很重要）</description>
+    </property>
+</configuration>
