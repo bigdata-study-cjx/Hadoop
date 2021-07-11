@@ -4,9 +4,10 @@ https://archive.apache.org/dist/hadoop/core/hadoop-2.6.0/hadoop-2.6.0.tar.gz
 ## 安装测试hadoop
 ```
 8088:yarn wenui端口
+19888:yarn 任务列表
 50070:hadoop webui端口
 50075:hadoop 下载文件端口
-➜ ~ docker run -it -p 8088:8088 -p 50070:50070 -p 50075:50075 --net bigdata --ip 172.168.0.2 --name hadoop2.6.0 --hostname bigdata-pro00 dockerhubbigdata/bigdata:jdk8 /bin/bash
+➜ ~ docker run -it -p 8088:8088 -p 19888:19888 -p 50070:50070 -p 50075:50075 --net bigdata --ip 172.168.0.2 --name hadoop2.6.0 --hostname bigdata-pro00 dockerhubbigdata/bigdata:jdk8 /bin/bash
 root@bigdata-pro00:~# 
 docker cp hadoop-2.6.0.tar.gz 37dc36e9d1b5:/opt/modules/
 root@bigdata-pro00:~# cd /opt/modules/
