@@ -30,6 +30,13 @@ hadoop	3
 hbase	2
 ...
 ```
+## 查看运行记录
+```
+root@bigdata:/opt/modules/hadoop-2.6.0# sbin/mr-jobhistory-daemon.sh start historyserver
+http://bigdata:19888 查看
+
+Jobs -> 任意 job ID -> Configuration -> 展示所有配置项
+```
 # 验证设置reduce数量
 ```
 job.setNumReduceTasks(2);
