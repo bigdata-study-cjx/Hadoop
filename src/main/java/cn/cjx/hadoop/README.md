@@ -8,6 +8,9 @@ export JAVA_HOME=/opt/modules/jdk1.8.0_271
 export PATH=$JAVA_HOME/bin:$PATH
 
 /opt/modules/hadoop-2.6.0/sbin/start-dfs.sh
+(只启动NameNode和DataNode：
+sbin/hadoop-haemon.sh start namenode  
+sbin/hadoop-haemon.sh start datanode)
 /opt/modules/hadoop-2.6.0/sbin/start-yarn.sh
 ~# jps
 787 SecondaryNameNode
